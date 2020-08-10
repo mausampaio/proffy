@@ -4,13 +4,14 @@ import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import RNPickerSelect from 'react-native-picker-select';
 
 import api from '../../services/api';
 
 import PageHeader from '../../components/PageHeader';
 import TeacherItem, { Teacher } from '../../components/TeacherItem';
 
-import styles from './styles';
+import styles, { pickerSelect } from './styles';
 
 function TeacherList() {
   const [teachers, setTeachers] = useState([]);
@@ -73,23 +74,50 @@ function TeacherList() {
         { isFiltersVisible && (
           <View style={styles.searchForm}>
             <Text style={styles.label}>Matérias</Text>
-            <TextInput 
-              style={styles.input}
+            <RNPickerSelect
               value={subject}
-              onChangeText={(text) => setSubject(text)}
-              placeholder='Qual matéria?'
-              placeholderTextColor='#c1bccc'
+              onValueChange={(text) => setSubject(text)}
+              items={[
+                { value: 'Artes', label: 'Artes' },
+                { value: 'Biología', label: 'Biología' },
+                { value: 'Ciências', label: 'Ciências' },
+                { value: 'Educação física', label: 'Educação física' },
+                { value: 'Física', label: 'Física' },
+                { value: 'Geografia', label: 'Geografia' },
+                { value: 'História', label: 'História' },
+                { value: 'Matemática', label: 'Matemática' },
+                { value: 'Português', label: 'Português' },
+                { value: 'Química', label: 'Química' },
+              ]}
+              style={pickerSelect}
+              placeholder={{ label: 'Qual matéria?', value: null, color: '#c1bccc' }}
+              Icon={() => {
+                return <Feather name="chevron-down" size={24} color="#c1bccc" />;
+              }}
+              doneText='Pronto'
             />
 
             <View style={styles.inputGroup}>
               <View style={styles.inputBlock}>
                 <Text style={styles.label}>Dia da semana</Text>
-                <TextInput 
-                  style={styles.input}
+                <RNPickerSelect
                   value={weekDay}
-                  onChangeText={(text) => setWeekDay(text)}
-                  placeholder='Qual dia?'
-                  placeholderTextColor='#c1bccc'
+                  onValueChange={(text) => setWeekDay(text)}
+                  items={[
+                    { value: '0', label: 'Domingo' },
+                    { value: '1', label: 'Segunda-feira' },
+                    { value: '2', label: 'Terça-feira' },
+                    { value: '3', label: 'Quarta-feira' },
+                    { value: '4', label: 'Quinta-feira' },
+                    { value: '5', label: 'Sexta-feira' },
+                    { value: '6', label: 'Sábado' },
+                  ]}
+                  style={pickerSelect}
+                  placeholder={{ label: 'Qual dia?', value: null, color: '#c1bccc' }}
+                  Icon={() => {
+                    return <Feather name="chevron-down" size={24} color="#c1bccc" />;
+                  }}
+                  doneText='Pronto'
                 />
               </View>
 

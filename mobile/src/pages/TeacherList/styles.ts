@@ -53,4 +53,32 @@ const styles = StyleSheet.create({
   },
 });
 
+export const pickerSelect = StyleSheet.create({
+  inputIOS: {
+    height: 54,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  InputAndroid: {
+    height: 54,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  iconContainer: {
+    top: 18,
+    right: 18,
+  },
+  placeholder: {
+    color: '#c1bccc',
+  }
+});
+
 export default styles;
