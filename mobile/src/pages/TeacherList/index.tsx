@@ -5,6 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import api from '../../services/api';
 
@@ -17,6 +18,7 @@ function TeacherList() {
   const [teachers, setTeachers] = useState([]);
   const [favorites, setFavorites] = useState<number[]>([]);
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
   const [subject, setSubject] = useState('');
   const [weekDay, setWeekDay] = useState('');
@@ -43,6 +45,10 @@ function TeacherList() {
 
   function handleToggleFilterVisible() {
     setIsFiltersVisible(!isFiltersVisible);
+  }
+
+  function handleToggleDatePicker() {
+    setDatePickerVisible(!isDatePickerVisible);
   }
 
   async function handleFilterSubmit() {
@@ -123,12 +129,30 @@ function TeacherList() {
 
               <View style={styles.inputBlock}>
                 <Text style={styles.label}>Horário</Text>
-                <TextInput 
+                <TextInput
+                  onTouchStart={handleToggleDatePicker}
+                  editable={false}
                   style={styles.input}
                   value={time}
                   onChangeText={(text) => setTime(text)}
                   placeholder='Qual horário?'
                   placeholderTextColor='#c1bccc'
+                />
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="time"
+                  onConfirm={(date) => {
+                    if (date.getMinutes() == 0) {
+                      setTime(`${date.getHours()}:00`)
+                    } else {
+                      setTime(`${date.getHours()}:${date.getMinutes()}`)
+                    }
+                    handleToggleDatePicker();
+                  }}
+                  onCancel={handleToggleDatePicker}
+                  cancelTextIOS="Cancelar"
+                  confirmTextIOS="Confirmar"
+                  headerTextIOS="Selecione a horário"
                 />
               </View>
             </View>
